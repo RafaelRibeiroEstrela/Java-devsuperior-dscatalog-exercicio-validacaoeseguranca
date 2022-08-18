@@ -18,7 +18,6 @@ public class City {
 	@Column(name = "ID_CITY")
 	private Long id;
 	
-	@Column(name = "NAME_CITY")
 	private String name;
 	
 	public City() {

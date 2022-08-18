@@ -20,14 +20,8 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID_EVENT")
 	private Long id;
-	
-	@Column(name = "NAME_EVENT")
 	private String name;
-	
-	@Column(name = "DATE_EVENT")
 	private LocalDate date;
-	
-	@Column(name = "URL_EVENT")
 	private String url;
 	
 	@ManyToOne

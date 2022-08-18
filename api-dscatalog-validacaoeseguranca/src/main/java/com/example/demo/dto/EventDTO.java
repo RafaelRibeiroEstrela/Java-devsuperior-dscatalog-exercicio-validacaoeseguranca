@@ -3,7 +3,6 @@ package com.example.demo.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import com.example.demo.entities.City;
 import com.example.demo.entities.Event;
 
 public class EventDTO implements Serializable {
@@ -18,19 +17,19 @@ public class EventDTO implements Serializable {
 
 	private String url;
 
-	private City city;
+	private Long cityId;
 	
 	public EventDTO() {
 		
 	}
 
-	public EventDTO(Long id, String name, LocalDate date, String url, City city) {
+	public EventDTO(Long id, String name, LocalDate date, String url, Long cityId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.date = date;
 		this.url = url;
-		this.city = city;
+		this.cityId = cityId;
 	}
 	
 	public EventDTO(Event event) {
@@ -38,7 +37,7 @@ public class EventDTO implements Serializable {
 		this.date = event.getDate();
 		this.name = event.getName();
 		this.url = event.getUrl();
-		this.city = event.getCity();
+		this.cityId = event.getCity().getId();
 	}
 
 	public Long getId() {
@@ -73,13 +72,15 @@ public class EventDTO implements Serializable {
 		this.url = url;
 	}
 
-	public City getCity() {
-		return city;
+	public Long getCityId() {
+		return cityId;
 	}
 
-	public void setCity(City city) {
-		this.city = city;
+	public void setCityId(Long cityId) {
+		this.cityId = cityId;
 	}
+
+	
 	
 	
 

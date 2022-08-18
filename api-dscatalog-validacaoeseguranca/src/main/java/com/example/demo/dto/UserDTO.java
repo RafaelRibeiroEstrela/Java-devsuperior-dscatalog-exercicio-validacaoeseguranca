@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
@@ -15,12 +14,6 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    
-    @NotBlank(message = "First name is required.")
-    private String firstName;
-    
-    @NotBlank(message = "Last name is required.")
-    private String lastName;
     
     @Email(message = "Invalid e-mail")
     private String email;
@@ -33,15 +26,11 @@ public class UserDTO implements Serializable {
 
     public UserDTO(Long id, String firstName, String lastName, String email) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.email = email;
     }
 
     public UserDTO(User user){
         id = user.getId();
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
         email = user.getEmail();
         user.getRoles().forEach(obj -> this.roles.add(new RoleDTO(obj)));
     }
@@ -56,22 +45,6 @@ public class UserDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
