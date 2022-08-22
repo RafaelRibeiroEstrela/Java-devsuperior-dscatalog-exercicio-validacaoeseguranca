@@ -2,6 +2,8 @@ package com.example.demo.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 import com.example.demo.entities.City;
 
 public class CityDTO implements Serializable{
@@ -9,6 +11,8 @@ public class CityDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	
+	@NotBlank(message = "City name is required")
 	private String name;
 	
 	public CityDTO() {

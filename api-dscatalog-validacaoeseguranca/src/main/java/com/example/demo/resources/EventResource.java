@@ -18,45 +18,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.CityDTO;
-import com.example.demo.services.CityService;
+import com.example.demo.dto.EventDTO;
+import com.example.demo.services.EventService;
 
 
 @RestController
-@RequestMapping("/cities")
-public class CityResource {
+@RequestMapping("/events")
+public class EventResource {
 	
 	@Autowired
-	private CityService cityService;
+	private EventService eventService;
 	
 	@GetMapping
-	public ResponseEntity<Page<CityDTO>> findPageable(Pageable pageable){
-		return ResponseEntity.status(HttpStatus.OK).body(cityService.findPageable(pageable));
+	public ResponseEntity<Page<EventDTO>> findPageable(Pageable pageable){
+		return ResponseEntity.status(HttpStatus.OK).body(eventService.findPageable(pageable));
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<List<CityDTO>> findAll() {
-		return ResponseEntity.status(HttpStatus.OK).body(cityService.findAll());
+	public ResponseEntity<List<EventDTO>> findAll() {
+		return ResponseEntity.status(HttpStatus.OK).body(eventService.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CityDTO> findById(@PathVariable Long id) {
-		return ResponseEntity.status(HttpStatus.OK).body(cityService.findById(id));
+	public ResponseEntity<EventDTO> findById(@PathVariable Long id) {
+		return ResponseEntity.status(HttpStatus.OK).body(eventService.findById(id));
 	}
 
 	@PostMapping
-	public ResponseEntity<CityDTO> save(@RequestBody @Valid CityDTO dto) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(cityService.save(dto));
+	public ResponseEntity<EventDTO> save(@RequestBody @Valid EventDTO dto) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(eventService.save(dto));
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<CityDTO> update(@PathVariable Long id, @RequestBody @Valid CityDTO dto) {
-		return ResponseEntity.status(HttpStatus.OK).body(cityService.update(id, dto));
+	public ResponseEntity<EventDTO> update(@PathVariable Long id, @RequestBody @Valid EventDTO dto) {
+		return ResponseEntity.status(HttpStatus.OK).body(eventService.update(id, dto));
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		cityService.delete(id);
+		eventService.delete(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 	

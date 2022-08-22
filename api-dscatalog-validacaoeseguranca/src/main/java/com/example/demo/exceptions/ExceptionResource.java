@@ -28,7 +28,7 @@ public class ExceptionResource {
 	public ResponseEntity<StandardError> exception(MethodArgumentNotValidException e, HttpServletRequest request){
 		StandardError err = new StandardError();
 		err.setTime(LocalDateTime.now());
-		err.setStatus(HttpStatus.BAD_REQUEST.value());
+		err.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
 		err.setError(e.getMessage());
 		err.setError(e.getBindingResult().getFieldErrors().toString());
 		err.setPath(request.getRequestURI());
@@ -38,7 +38,7 @@ public class ExceptionResource {
 			err.getFieldsErrros().put(f.getField(), f.getDefaultMessage());
 		}
 		
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 	}
 	
 

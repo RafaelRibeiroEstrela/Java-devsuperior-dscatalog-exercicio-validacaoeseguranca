@@ -36,6 +36,13 @@ public class EventService {
 		
 	}
 	
+	public EventDTO save(EventDTO dto) {
+		Event entity = new Event();
+		
+		copyDtoToEntity(entity, dto);
+		return new EventDTO(repository.save(entity));
+	}
+	
 	public EventDTO update(Long id, EventDTO dto) {
 		Event entity = repository.findById(id).orElseThrow(() -> new ApiException("Entity not found"));
 		copyDtoToEntity(entity, dto);

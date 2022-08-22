@@ -42,9 +42,9 @@ public class CityControllerIT {
 	void setUp() throws Exception {
 		
 		clientUsername = "ana@gmail.com";
-		clientPassword = "123456";
+		clientPassword = "12345";
 		adminUsername = "bob@gmail.com";
-		adminPassword = "123456";
+		adminPassword = "12345";
 	}
 
 	@Test

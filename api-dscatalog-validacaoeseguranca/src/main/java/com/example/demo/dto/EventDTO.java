@@ -3,6 +3,10 @@ package com.example.demo.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
 import com.example.demo.entities.Event;
 
 public class EventDTO implements Serializable {
@@ -11,12 +15,15 @@ public class EventDTO implements Serializable {
 
 	private Long id;
 
+	@NotBlank(message = "Event name is required")
 	private String name;
-
+	
+	@Past(message = "The date cannot be in the past")
 	private LocalDate date;
 
 	private String url;
 
+	@NotNull(message = "City is required")
 	private Long cityId;
 	
 	public EventDTO() {
