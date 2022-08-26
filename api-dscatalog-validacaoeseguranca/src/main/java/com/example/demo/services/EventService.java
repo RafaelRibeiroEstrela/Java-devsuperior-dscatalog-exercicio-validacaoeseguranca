@@ -38,7 +38,6 @@ public class EventService {
 	
 	public EventDTO save(EventDTO dto) {
 		Event entity = new Event();
-		
 		copyDtoToEntity(entity, dto);
 		return new EventDTO(repository.save(entity));
 	}

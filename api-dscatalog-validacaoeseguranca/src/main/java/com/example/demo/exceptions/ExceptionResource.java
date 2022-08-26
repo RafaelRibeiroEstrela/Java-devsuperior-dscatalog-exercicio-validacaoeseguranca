@@ -35,7 +35,10 @@ public class ExceptionResource {
 		
 		//Obtem os erros de cada campo do BeanValidation
 		for (FieldError f : e.getBindingResult().getFieldErrors()) {
-			err.getFieldsErrros().put(f.getField(), f.getDefaultMessage());
+			com.example.demo.exceptions.FieldError error = new com.example.demo.exceptions.FieldError();
+			error.setFieldName(f.getField());
+			error.setMessage(f.getDefaultMessage());
+			err.getErros().add(error);
 		}
 		
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);

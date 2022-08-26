@@ -2,8 +2,8 @@ package com.example.demo.exceptions;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -16,7 +16,7 @@ public class StandardError implements Serializable{
 	private Integer status;
 	private String error;
 	private String path;
-	private Map<String, String> errors = new HashMap<>();
+	private List<FieldError> erros = new ArrayList<>();
 	
 	public StandardError() {
 		
@@ -62,9 +62,11 @@ public class StandardError implements Serializable{
 		this.path = path;
 	}
 
-	public Map<String, String> getFieldsErrros() {
-		return errors;
+	public List<FieldError> getErros() {
+		return erros;
 	}
+
+	
 	
 	
 

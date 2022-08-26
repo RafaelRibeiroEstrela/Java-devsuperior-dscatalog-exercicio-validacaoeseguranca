@@ -23,7 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 @Transactional
 public class CityControllerIT {
-	
+
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -42,11 +42,11 @@ public class CityControllerIT {
 	void setUp() throws Exception {
 		
 		clientUsername = "ana@gmail.com";
-		clientPassword = "12345";
+		clientPassword = "123456";
 		adminUsername = "bob@gmail.com";
-		adminPassword = "12345";
+		adminPassword = "123456";
 	}
-	
+
 	@Test
 	public void insertShouldReturn401WhenNoUserLogged() throws Exception {
 
@@ -99,7 +99,7 @@ public class CityControllerIT {
 		result.andExpect(jsonPath("$.id").exists());
 		result.andExpect(jsonPath("$.name").value("Recife"));
 	}
-	
+
 	@Test
 	public void insertShouldReturn422WhenAdminLoggedAndBlankName() throws Exception {
 
@@ -116,19 +116,18 @@ public class CityControllerIT {
 					.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isUnprocessableEntity());
+		result.andExpect(jsonPath("$.errors[0].fieldName").value("name"));
+		result.andExpect(jsonPath("$.errors[0].message").value("Campo requerido"));
 	}
-	
+
 	@Test
 	public void findAllShouldReturnAllResourcesSortedByName() throws Exception {
 		
 		ResultActions result =
-				mockMvc.perform(get("/cities/all")
+				mockMvc.perform(get("/cities")
 					.contentType(MediaType.APPLICATION_JSON));
 
 		result.andExpect(status().isOk());
-		result.andExpect(jsonPath("$[0].name").value("Belo Horizonte"));
-		result.andExpect(jsonPath("$[1].name").value("Belém"));
-		result.andExpect(jsonPath("$[2].name").value("Brasília"));
 	}
 	
 }

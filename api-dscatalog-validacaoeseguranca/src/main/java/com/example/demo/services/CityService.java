@@ -20,8 +20,7 @@ public class CityService {
 	private CityRepository repository;
 	
 	public Page<CityDTO> findPageable(Pageable pageable){
-		return repository.findAll(pageable)
-				.map(entity -> new CityDTO(entity));
+		return repository.findAll(pageable).map(city -> new CityDTO(city));
 	}
 	
 	public List<CityDTO> findAll(){
