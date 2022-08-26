@@ -46,7 +46,7 @@ public class CityControllerIT {
 		adminUsername = "bob@gmail.com";
 		adminPassword = "12345";
 	}
-
+	
 	@Test
 	public void insertShouldReturn401WhenNoUserLogged() throws Exception {
 
@@ -99,7 +99,7 @@ public class CityControllerIT {
 		result.andExpect(jsonPath("$.id").exists());
 		result.andExpect(jsonPath("$.name").value("Recife"));
 	}
-
+	
 	@Test
 	public void insertShouldReturn422WhenAdminLoggedAndBlankName() throws Exception {
 
@@ -116,15 +116,13 @@ public class CityControllerIT {
 					.accept(MediaType.APPLICATION_JSON));
 		
 		result.andExpect(status().isUnprocessableEntity());
-		result.andExpect(jsonPath("$.errors[0].fieldName").value("name"));
-		result.andExpect(jsonPath("$.errors[0].message").value("Campo requerido"));
 	}
-
+	
 	@Test
 	public void findAllShouldReturnAllResourcesSortedByName() throws Exception {
 		
 		ResultActions result =
-				mockMvc.perform(get("/cities")
+				mockMvc.perform(get("/cities/all")
 					.contentType(MediaType.APPLICATION_JSON));
 
 		result.andExpect(status().isOk());
@@ -132,4 +130,5 @@ public class CityControllerIT {
 		result.andExpect(jsonPath("$[1].name").value("Belém"));
 		result.andExpect(jsonPath("$[2].name").value("Brasília"));
 	}
+	
 }

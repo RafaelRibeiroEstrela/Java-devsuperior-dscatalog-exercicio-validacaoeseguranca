@@ -16,7 +16,7 @@ public class StandardError implements Serializable{
 	private Integer status;
 	private String error;
 	private String path;
-	private Map<String, String> fieldsErrros = new HashMap<>();
+	private Map<String, String> errors = new HashMap<>();
 	
 	public StandardError() {
 		
@@ -63,7 +63,7 @@ public class StandardError implements Serializable{
 	}
 
 	public Map<String, String> getFieldsErrros() {
-		return fieldsErrros;
+		return errors;
 	}
 	
 	

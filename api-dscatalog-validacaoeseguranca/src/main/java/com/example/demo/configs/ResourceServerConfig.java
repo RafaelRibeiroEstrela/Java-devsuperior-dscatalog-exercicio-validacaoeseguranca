@@ -28,8 +28,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 	
 	private static final String[] CLIENT_OR_ADMIN = {"/cities/**", "/events/**"};
 	
-	private static final String[] EVENTS = {"/events/**"};
-	
 
 	@Override
 	public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -47,7 +45,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 		http.authorizeRequests()
 		.antMatchers(PUBLIC).permitAll()
 		.antMatchers(HttpMethod.GET, CLIENT_OR_ADMIN).permitAll()
-		.antMatchers(HttpMethod.POST, EVENTS).hasAnyRole("CLIENT", "ADMIN")
+		.antMatchers(HttpMethod.POST, CLIENT_OR_ADMIN[1]).hasAnyRole("CLIENT", "ADMIN")
 		.anyRequest().hasAnyRole("ADMIN");
 	}
 	

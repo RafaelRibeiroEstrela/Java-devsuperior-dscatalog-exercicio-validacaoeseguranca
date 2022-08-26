@@ -15,15 +15,15 @@ public class EventDTO implements Serializable {
 
 	private Long id;
 
-	@NotBlank(message = "Event name is required")
+	@NotBlank(message = "Campo requerido")
 	private String name;
 	
-	@Past(message = "The date cannot be in the past")
+	@Past(message = "Campo requerido")
 	private LocalDate date;
 
 	private String url;
 
-	@NotNull(message = "City is required")
+	@NotNull(message = "Campo requerido")
 	private Long cityId;
 	
 	public EventDTO() {
