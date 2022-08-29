@@ -1,41 +1,26 @@
 package com.example.demo.exceptions;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-public class StandardError implements Serializable{
-
+public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
-	private LocalDateTime time;
+
+	private Instant timestamp;
 	private Integer status;
 	private String error;
+	private String message;
 	private String path;
-	private List<FieldError> erros = new ArrayList<>();
 	
 	public StandardError() {
-		
 	}
 
-	public StandardError(LocalDateTime time, Integer status, String error, String path) {
-		super();
-		this.time = time;
-		this.status = status;
-		this.error = error;
-		this.path = path;
+	public Instant getTimestamp() {
+		return timestamp;
 	}
 
-	public LocalDateTime getTime() {
-		return time;
-	}
-
-	public void setTime(LocalDateTime time) {
-		this.time = time;
+	public void setTimestamp(Instant timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	public Integer getStatus() {
@@ -54,6 +39,14 @@ public class StandardError implements Serializable{
 		this.error = error;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	public String getPath() {
 		return path;
 	}
@@ -61,13 +54,4 @@ public class StandardError implements Serializable{
 	public void setPath(String path) {
 		this.path = path;
 	}
-
-	public List<FieldError> getErros() {
-		return erros;
-	}
-
-	
-	
-	
-
 }

@@ -1,13 +1,12 @@
 package com.example.demo.resources;
 
-import java.util.List;
+import java.net.URI;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,48 +16,49 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.demo.dto.UserDTO;
-import com.example.demo.dto.UserInsertDTO;
+import com.example.demo.dtos.UserDTO;
+import com.example.demo.dtos.UserInsertDTO;
+import com.example.demo.dtos.UserUpdateDTO;
 import com.example.demo.services.UserService;
 
-
 @RestController
-@RequestMapping("/users")
+@RequestMapping(value = "/users")
 public class UserResource {
-	
+
 	@Autowired
-	private UserService userService;
+	private UserService service;
 	
 	@GetMapping
-	public ResponseEntity<Page<UserDTO>> findPageable(Pageable pageable){
-		return ResponseEntity.status(HttpStatus.OK).body(userService.findPageable(pageable));
-	}
-	
-	@GetMapping("/all")
-	public ResponseEntity<List<UserDTO>> findAll() {
-		return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
+	public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable) {
+		Page<UserDTO> list = service.findAllPaged(pageable);		
+		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
-		return ResponseEntity.status(HttpStatus.OK).body(userService.findById(id));
-	}
-
-	@PostMapping
-	public ResponseEntity<UserDTO> save(@RequestBody @Valid UserInsertDTO dto) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(dto));
-	}
-
-	@PutMapping("/{id}")
-	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserInsertDTO dto) {
-		return ResponseEntity.status(HttpStatus.OK).body(userService.update(id, dto));
-	}
-
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		userService.delete(id);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		UserDTO dto = service.findById(id);
+		return ResponseEntity.ok().body(dto);
 	}
 	
-}
+	@PostMapping
+	public ResponseEntity<UserDTO> insert(@RequestBody @Valid UserInsertDTO dto) {
+		UserDTO newDto = service.insert(dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(newDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(newDto);
+	}
+
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody @Valid UserUpdateDTO dto) {
+		UserDTO newDto = service.update(id, dto);
+		return ResponseEntity.ok().body(newDto);
+	}
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+} 

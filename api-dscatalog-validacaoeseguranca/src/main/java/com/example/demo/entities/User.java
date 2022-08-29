@@ -1,88 +1,107 @@
 package com.example.demo.entities;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 @Entity
-@Table(name = "TB_USER")
-public class User implements Serializable, UserDetails {
+@Table(name = "tb_user")
+public class User implements UserDetails, Serializable {
+	private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(unique = true)
+	private String email;
+	private String password;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_user_role",
+		joinColumns = @JoinColumn(name = "user_id"),
+		inverseJoinColumns = @JoinColumn(name = "role_id"))	
+	private Set<Role> roles = new HashSet<>();
+	
+	public User() {
+	}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(unique = true)
-    private String email;
-    private String password;
+	public User(Long id, String email, String password) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.password = password;
+	}
 
-    @ManyToMany(fetch = FetchType.EAGER) //sempre que buscar um usuário, tambem irá trazer os perfis
-    @JoinTable(name = "TB_USER_ROLE",
-            joinColumns = @JoinColumn(name = "ID_USER"),
-            inverseJoinColumns = @JoinColumn(name = "ID_ROLE"))
-    private Set<Role> roles = new HashSet<>();
+	public Long getId() {
+		return id;
+	}
 
-    public User(){
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public User(Long id, String email, String password) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

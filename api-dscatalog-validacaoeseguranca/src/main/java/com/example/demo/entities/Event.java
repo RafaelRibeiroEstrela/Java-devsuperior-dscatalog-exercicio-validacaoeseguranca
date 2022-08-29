@@ -1,9 +1,7 @@
 package com.example.demo.entities;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,27 +11,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TB_EVENT")
+@Table(name = "tb_event")
 public class Event {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID_EVENT")
 	private Long id;
 	private String name;
 	private LocalDate date;
 	private String url;
 	
 	@ManyToOne
-	@JoinColumn(name = "ID_CITY")
+	@JoinColumn(name = "city_id")
 	private City city;
 	
 	public Event() {
-		
 	}
 
 	public Event(Long id, String name, LocalDate date, String url, City city) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.date = date;
@@ -80,24 +75,4 @@ public class Event {
 	public void setCity(City city) {
 		this.city = city;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Event other = (Event) obj;
-		return Objects.equals(id, other.id);
-	}
-	
-	
-
 }
